@@ -1,4 +1,5 @@
 import { resolve, lookup, register } from "./api.ts"
+import { ConsolePage } from "./console.ts"
 
 console.log("Hello via Bun!");
 
@@ -6,6 +7,12 @@ console.log("Hello via Bun!");
 Bun.serve({
     port:80,
     routes: {
+        "/console": {
+            GET: () => {
+                console.log('\n\nREQUEST\n')
+                return ConsolePage()
+            }
+        },
         "/api/v1/resolve": {
             POST: async req => {
                 console.log('\n\nREQUEST\n')
