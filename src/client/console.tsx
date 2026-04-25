@@ -53,10 +53,11 @@ export function Page() {
                 <label>
                     Shortened URL
                     <div className="link-line">
-                        <span className="prefix">{window.location.origin}/</span>
+                        {/* <span className="prefix">{window.location.origin}/</span> */}
+                        <span className="prefix">https://ogp-urlshortener.onrender.com/</span>
                         <input name="alias_path" className="alias_path" type="text" placeholder="my-link" required />
-                        <div className="note">Allowed path chars: letters, numbers, and URL-safe symbols except slash (/).</div>
                     </div>
+                    <div className="note">Allowed path chars: letters, numbers, and URL-safe symbols except slash (/).</div>
                 </label>
                 <label>
                     Destination URL
