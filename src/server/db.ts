@@ -6,8 +6,13 @@ export async function get_dest(alias_path: string): Promise<string> {
     let res: Array<any>
     try {
         res = await pg`SELECT * from forwards WHERE alias_path = ${alias_path}` as Array<any>
-    } catch {
-        console.error("Database error getting dest url")
+    } catch (error) {
+        // do not crash on database error
+        if (error instanceof Error) {
+            console.log(error.message)
+        } else {
+            console.error("Database error getting dest url")
+        }
         return ''
     }
     if (res.length==0) {
@@ -22,9 +27,13 @@ export async function get_alias(host: string, dest: string): Promise<Array<strin
     let res
     try{
         res = await pg`SELECT * from forwards WHERE dest=${dest}` as Array<any>
-    } catch {
+    } catch (error) {
         // do not crash on database error
-        console.error("Database error doing reverse lookup using dest url")
+        if (error instanceof Error) {
+            console.log(error.message)
+        } else {
+            console.error("Database error doing reverse lookup using dest url")
+        }
         return []
     }
 
@@ -40,8 +49,13 @@ export async function get_alias(host: string, dest: string): Promise<Array<strin
 export async function set_alias_path(alias_path: string, dest: string): Promise<boolean> {
     try{
         let res = await pg`INSERT INTO forwards (alias_path, dest) VALUES (${alias_path}, ${dest}) ON CONFLICT (alias_path) DO UPDATE SET alias_path=${alias_path}, dest=${dest}`
-    } catch {
-        console.error("Database error interting/updating row entry")
+    } catch (error) {
+        // do not crash on database error
+        if (error instanceof Error) {
+            console.log(error.message)
+        } else {
+            console.error("Database error interting/updating row entry")
+        }
         return false
     }
     return true
