@@ -47,7 +47,7 @@ export function Page() {
     return (
         <main className="panel">
             <h1>Create a shortened URL</h1>
-            <p>Set your short path and destination URL. A session token is stored in the browser and sent with each submission.</p>
+            <p>Set your short path and destination URL.</p>
 
             <form id="create-form" onSubmit={onClickSubmit}>
                 <label>

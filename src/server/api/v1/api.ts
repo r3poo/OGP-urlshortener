@@ -12,6 +12,12 @@ function validateAliasPath(inp: string): boolean {
 }
 
 export function get_host(req: BunRequest): string {
+    // use override url if provided
+    if (Bun.env.HOST) {
+        return Bun.env.HOST
+    }
+
+    // test for proxy headers else grab url from req
     const f_host = req.headers.get("X-Forwarded-Host")
     const f_proto = req.headers.get("X-Forwarded-Proto")
     let host

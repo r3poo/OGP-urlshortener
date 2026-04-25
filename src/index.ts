@@ -5,7 +5,7 @@ import index from './client/index.html'
 const nonce = "/" + crypto.randomUUID() 
 
 Bun.serve({
-    port:Bun.env.PORT,
+    port: Bun.env.PORT || 80,
     routes: {
         ...{[nonce]: index} as Record<string, typeof index>,
         "/admin": async req => {
