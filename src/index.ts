@@ -1,16 +1,17 @@
-import { get_host, resolve, lookup, register } from "./server/api/v1/api"
+import { resolve, lookup, register } from "./server/api/v1/api"
 import { NewSession } from "./server/auth"
 import index from './client/index.html'
 
 const nonce = "/" + crypto.randomUUID() 
+console.log(`\n\nGENERATED STATIC NONCE: ${nonce}\n`)
 
 Bun.serve({
     port: Bun.env.PORT || 80,
     routes: {
         ...{[nonce]: index} as Record<string, typeof index>,
-        "/admin": async req => {
+        "/admin": async () => {
             const token = NewSession()
-            return fetch(`${get_host(req)}/${nonce}`).then(res => {
+            return fetch(`http://0.0.0.0/${nonce}`).then(res => {
                 const { headers } = res
                 headers.set("Set-Cookie", `session_token=${token}; HttpOnly; SameSite`)
                 return res
