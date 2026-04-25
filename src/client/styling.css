@@ -1,0 +1,129 @@
+:root {
+  --bg: #f2efe9;
+  --surface: #fffaf2;
+  --text: #2a241f;
+  --muted: #6b5e50;
+  --accent: #16666b;
+  --accent-2: #f3a447;
+  --border: #d8cbbd;
+  --danger: #9f2a2a;
+  font-size: small;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  width: 100vw;
+  min-height: 100vh;
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  background:
+    radial-gradient(circle at 10% 10%, #fff7eb 0%, transparent 32%),
+    radial-gradient(circle at 90% 90%, #e8f5f5 0%, transparent 30%),
+    var(--bg);
+  color: var(--text);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.panel {
+  max-width: 800px;
+  min-width: 200px;
+  width: 100%;
+  background: linear-gradient(180deg, #fffdf9 0%, var(--surface) 100%);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 18px 40px rgba(58, 46, 32, 0.12);
+  padding: 24px;
+  animation: fade-in 500ms ease-out;
+}
+
+p {
+  margin-bottom: 30;
+  color: var(--muted);
+}
+
+form {
+  display: grid;
+  gap: 12px;
+}
+
+label {
+  display: grid;
+  gap: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.prefix {
+  font-weight: 500;
+  margin-right: 3px;
+  align-self: center;
+  grid-column: 1;
+}
+
+.link-line {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+.note {
+  font-size: 0.85rem;
+  color: var(--muted);
+  padding-top: 5px;
+  padding-left: 10px;
+  grid-column: 2;
+}
+
+input.link-line {
+  grid-column: 2;
+}
+
+input {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 1rem;
+  color: var(--text);
+  background: #fff;
+}
+
+input:focus {
+  outline: 2px solid color-mix(in srgb, var(--accent) 30%, white);
+  border-color: var(--accent);
+}
+
+button {
+  border: 0;
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(90deg, var(--accent), #1e7f86);
+  cursor: pointer;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(22, 102, 107, 0.25);
+}
+
+#status {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid var(--border);
+  min-height: 40px;
+  white-space: pre-wrap;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
