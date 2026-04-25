@@ -1,4 +1,4 @@
-import { resolve, lookup, register } from "./server/api/v1/api"
+import { get_host, resolve, lookup, register } from "./server/api/v1/api"
 import { NewSession } from "./server/auth"
 import index from './client/index.html'
 
@@ -9,9 +9,9 @@ Bun.serve({
     port: Bun.env.PORT || 80,
     routes: {
         ...{[nonce]: index} as Record<string, typeof index>,
-        "/admin": async () => {
+        "/admin": async req => {
             const token = NewSession()
-            return fetch(`http://0.0.0.0/${nonce}`).then(res => {
+            return fetch(`${get_host(req)}${nonce}`).then(res => {
                 const { headers } = res
                 headers.set("Set-Cookie", `session_token=${token}; HttpOnly; SameSite`)
                 return res
