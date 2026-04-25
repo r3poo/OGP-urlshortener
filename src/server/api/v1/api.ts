@@ -75,7 +75,7 @@ export async function lookup(req: BunRequest): Promise<Response> {
     // auth
     const token = req.cookies.get('session_token')
     if (!token || !ValidateSession(token)) {
-        return new Response("Unautorized", {
+        return new Response("Unauthorized", {
             status: 401
         })
     }
@@ -104,7 +104,7 @@ export async function register(req: BunRequest): Promise<Response> {
     // auth
     const token = req.cookies.get('session_token')
     if (!token || !ValidateSession(token)) {
-        return new Response("Unautorized", {
+        return new Response("Unauthorized", {
             status: 401
         })
     }

@@ -13,6 +13,8 @@ Bun.serve({
             const token = NewSession()
             return fetch(`${get_host(req)}${nonce}`).then(res => {
                 const { headers } = res
+                headers.delete("Content-Encoding")
+                headers.delete("Content-Length")
                 headers.set("Set-Cookie", `session_token=${token}; HttpOnly; SameSite`)
                 return res
             })
