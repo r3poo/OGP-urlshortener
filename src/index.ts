@@ -36,7 +36,7 @@ Bun.serve({
         }
     },
     fetch() {
-        return new Response("Not Found", {
+        return new Response("URL Shortener available at /admin", {
             headers: {
                 "Content-Type": "text/plain"
             },
