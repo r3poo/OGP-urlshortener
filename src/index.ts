@@ -33,7 +33,7 @@ Bun.serve({
         }} as consoleType,
         "/api/v1/lookup": {
             POST: async req => {
-                console.log('\n\nREQUEST TO /api/v1/resolve\n')
+                console.log('\n\nREQUEST TO /api/v1/lookup\n')
                 return await lookup(req);
             }
         },
