@@ -21,6 +21,9 @@ PG_URI= #required
 # name of table to use in postgresql
 DB_NAME= #required
 
+# ttl in days for shortened url entries
+PUBLIC_LINK_TTL= #required
+
 # port binding (defaults to 80)
 PORT= #optional
 
@@ -30,11 +33,12 @@ HOST= #optional
 # path to console (defaults to /admin)
 CONSOLE= #optional
 
-# path for shortened urls (defaults to /)
+# path for shortened urls (defaults to /url, cannot be root /)
 SHORTENED= #optional
 
 # token to access api directly, see api section in readme
 PRIV_TOKEN= #optional
+
 ```
 
 ## Deployment

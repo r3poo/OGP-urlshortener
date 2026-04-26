@@ -6,7 +6,7 @@ const DB_NAME = Bun.env.DB_NAME
 await pg`DEALLOCATE ALL`
 
 
-// clear database of entries oder than 1 day
+// clear database of entries older than configured days
 async function cleanURLs() {
     console.log("cleaning database")
     try {
