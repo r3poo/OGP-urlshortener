@@ -20,7 +20,7 @@ async function cleanURLs() {
     }
 }
 
-// get all entries
+// get liveness
 async function db_live() {
     console.log(`DB Liveness Check - ${new Date().toUTCString()}`)
     let res: Array<any>

@@ -150,7 +150,7 @@ export async function register(req: BunRequest): Promise<Response> {
 
         if (success) {
             // no errors with db, return 200 with shortened url
-            const short = get_host(req) + (Bun.env.SHORTENED || "") + "/" + alias_path
+            const short = get_host(req) + (Bun.env.SHORTENED || "/url") + "/" + alias_path
             return new Response(short, {
                 headers: {
                     "Content-Type": "text/plain"
