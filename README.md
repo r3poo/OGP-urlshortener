@@ -21,6 +21,7 @@ PORT: override port binding (defaults to 80)
 HOST: override public hostname (defaults to auto-detection)
 CONSOLE: override path to console (defaults to /admin)
 SHORTENED: override path for shortened urls (defaults to /)
+PRIV_TOKEN: optional token to access api directly, set as session_token:PRIV_TOKEN in cookies
 ```
 
 ### Deployment
