@@ -3,7 +3,7 @@ import './styling.css'
 
 
 export function Page() {
-    const [status, setStatus] = useState('Ready')
+    const [status, setStatus] = useState('')
     const [short, setShort] = useState('')
 
     const onClickSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
@@ -46,15 +46,15 @@ export function Page() {
     return (
         <main className="panel">
             <h1>Create a shortened URL</h1>
-            <p>Enter a custom short path and destination URL. Shortened URLs last 24 hours.</p>
+            <p>Shortened URLs expire after 24 hours.</p>
 
             <form id="create-form" onSubmit={onClickSubmit}>
                 <label>
                     <div className="input-header">Shortened URL</div>
                     <div className="link-flex">
                         <span className="prefix">{window.location.origin}/</span>
-                        <input name="alias_path" className="alias_path" type="text" placeholder="my-link" required />
-                        <div className="note">Allowed path chars: letters, numbers, and URL-safe symbols except slash (/)</div>
+                        <input name="alias_path" className="alias_path" type="text" placeholder="custom token" required />
+                        <div className="note">only alphanumeric and URL-safe symbols except slash (/)</div>
                     </div>
                 </label>
                 <label>

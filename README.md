@@ -1,5 +1,5 @@
 # Simple URL Shortener
-A URL shortener built with React on the Bun runtinme that can be served via a public IP or behind a reverse proxy passing proxy headers. Console acccessible from /admin path
+A URL shortener built with React on the Bun runtime that can be served via a public IP or behind a reverse proxy passing proxy headers. Console acccessible from /admin path
 
 ## Configuration
 Application uses a postgresql backend to store redirect routes. If using Supabase, select `Transaction pooler` when connecting.
@@ -7,21 +7,34 @@ Application uses a postgresql backend to store redirect routes. If using Supabas
 Create Database With Following Schema:
 | Name | Type | Default Value | Primary | Unique |
 |------|------|------|------|------|
-| id | int8 | - | - [x] |  - [x] | 
-| created_at | timestampz | now() | - [] | - [] |
-| alias_path | text | "" | - [] | - [x] | 
-| dest | text | "" | - [] | - [] |
+| id | int8 |  | :o: | :o: | 
+| created_at | timestampz | now() | :x: | :x: |
+| alias_path | text | "" | :x: | :o: | 
+| dest | text | "" | :x: | :x: |
 
 
 Create .env file with the following variables:
 ```
-PG_URI: postgres connection uri (postgresql://...)
-DB_NAME: name of table to use in postgresql
-PORT: override port binding (defaults to 80)
-HOST: override public hostname (defaults to auto-detection)
-CONSOLE: override path to console (defaults to /admin)
-SHORTENED: override path for shortened urls (defaults to /)
-PRIV_TOKEN: optional token to access api directly, set as session_token:PRIV_TOKEN in cookies
+# postgres connection uri (postgresql://...)
+PG_URI= #required
+
+# name of table to use in postgresql
+DB_NAME= #required
+
+# port binding (defaults to 80)
+PORT= #optional
+
+# override public hostname (defaults to auto-detection)
+HOST= #optional
+
+# path to console (defaults to /admin)
+CONSOLE= #optional
+
+# path for shortened urls (defaults to /)
+SHORTENED= #optional
+
+# token to access api directly, see api section in readme
+PRIV_TOKEN= #optional
 ```
 
 ## Deployment
