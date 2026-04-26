@@ -8,10 +8,7 @@ export function NewSession(): string {
 
 
 export function ValidateSession(token: string): boolean {
-    if (Bun.env.NODE_ENV!=="production" && token==="UNSAFETOKEN") {
-        return true
-    }
-    return sessions.has(token)
+    return token==Bun.env.PRIV_TOKEN || sessions.has(token)
 }
 
 

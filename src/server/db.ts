@@ -1,11 +1,35 @@
-import { SQL } from "bun";
+import { SQL, sql } from "bun";
 
 const pg = new SQL(Bun.env.PG_URI as string);
+const DB_NAME = Bun.env.DB_NAME
+// clear prepared statements
+await pg`DEALLOCATE ALL`
+
+
+// clear database of entries oder than 1 day
+async function cleanURLs() {
+    console.log("cleaning database")
+    try {
+        await pg`DELETE FROM ${sql(DB_NAME)} WHERE created_at < NOW() - INTERVAL '1 day'`
+    } catch (error) {
+        if (error instanceof Error) {
+            console.log(error.message)
+        } else {
+            console.error("Failed to clear database of old urls")
+        }
+    }
+}
+
+// run cleaning routine every minute
+const cleanURLsSchedule = setInterval(cleanURLs, 60000)
+cleanURLs()
+
+
 
 export async function get_dest(alias_path: string): Promise<string> {
     let res: Array<any>
     try {
-        res = await pg`SELECT * from forwards WHERE alias_path = ${alias_path}` as Array<any>
+        res = await pg`SELECT * from ${sql(DB_NAME)} WHERE alias_path = ${alias_path}` as Array<any>
     } catch (error) {
         // do not crash on database error
         if (error instanceof Error) {
@@ -26,7 +50,7 @@ export async function get_dest(alias_path: string): Promise<string> {
 export async function get_alias(host: string, dest: string): Promise<Array<string>> {
     let res
     try{
-        res = await pg`SELECT * from forwards WHERE dest=${dest}` as Array<any>
+        res = await pg`SELECT * from ${sql(DB_NAME)} WHERE dest=${dest}` as Array<any>
     } catch (error) {
         // do not crash on database error
         if (error instanceof Error) {
@@ -48,7 +72,7 @@ export async function get_alias(host: string, dest: string): Promise<Array<strin
 
 export async function set_alias_path(alias_path: string, dest: string): Promise<boolean> {
     try{
-        await pg`INSERT INTO forwards (alias_path, dest) VALUES (${alias_path}, ${dest}) ON CONFLICT (alias_path) DO UPDATE SET alias_path=${alias_path}, dest=${dest}`
+        await pg`INSERT INTO ${sql(DB_NAME)} (alias_path, dest) VALUES (${alias_path}, ${dest}) ON CONFLICT (alias_path) DO UPDATE SET alias_path=${alias_path}, dest=${dest}`
     } catch (error) {
         // do not crash on database error
         if (error instanceof Error) {

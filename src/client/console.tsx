@@ -46,7 +46,7 @@ export function Page() {
     return (
         <main className="panel">
             <h1>Create a shortened URL</h1>
-            <p>Enter a custom short path and destination URL.</p>
+            <p>Enter a custom short path and destination URL. Shortened URLs last 24 hours.</p>
 
             <form id="create-form" onSubmit={onClickSubmit}>
                 <label>

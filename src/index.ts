@@ -31,7 +31,7 @@ Bun.serve({
                 return res
             })
         }} as consoleType,
-        "/api/v1/resolve": {
+        "/api/v1/lookup": {
             POST: async req => {
                 console.log('\n\nREQUEST TO /api/v1/resolve\n')
                 return await lookup(req);

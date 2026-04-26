@@ -4,9 +4,19 @@ A URL shortener built with React on the Bun runtinme that can be served via a pu
 ### Configuration
 Application uses a postgresql backend to store redirect routes. If using Supabase, select `Transaction pooler` when connecting.
 
+Create Database With Following Schema:
+| Name | Type | Default Value | Primary | Unique |
+|------|------|------|------|------|
+| id | int8 | - | - [x] |  - [x] | 
+| created_at | timestampz | now() | - [] | - [] |
+| alias_path | text | "" | - [] | - [x] | 
+| dest | text | "" | - [] | - [] |
+
+
 Create .env file with the following variables:
 ```
 PG_URI: postgres connection uri (postgresql://...)
+DB_NAME: name of table to use in postgresql
 PORT: override port binding (defaults to 80)
 HOST: override public hostname (defaults to auto-detection)
 CONSOLE: override path to console (defaults to /admin)

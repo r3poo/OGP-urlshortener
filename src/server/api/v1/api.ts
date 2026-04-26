@@ -37,6 +37,8 @@ function strip_slash(inp: string): string {
 
 
 
+// GET
+// redirect to associated dest if alias_path exists
 export async function resolve(req: BunRequest): Promise<Response> {
     // get path, remove leading and trailing '/'
     const alias_path = strip_slash(req.params.path as string)
@@ -71,6 +73,8 @@ export async function resolve(req: BunRequest): Promise<Response> {
 }
 
 
+// POST
+// reverse lookup using dest
 export async function lookup(req: BunRequest): Promise<Response> {
     // auth
     const token = req.cookies.get('session_token')
@@ -100,6 +104,8 @@ export async function lookup(req: BunRequest): Promise<Response> {
     }
 }
 
+// POST
+// add alias_path -> dest entry
 export async function register(req: BunRequest): Promise<Response> {
     // auth
     const token = req.cookies.get('session_token')
@@ -127,8 +133,21 @@ export async function register(req: BunRequest): Promise<Response> {
         // matches for alpha...://
         const dest: string = new RegExp(/^\W+:\/\/.+/) ? body.dest : 'http://' + body.dest
         
+        // return 409:conflict if alias_path already exists
+        if (await get_dest(alias_path)!=='') {
+            console.log("alias exists")
+            return new Response("Alias already exists", {
+                headers: {
+                    "Content-Type": "text/plain"
+                },
+                status: 409
+            })
+        }
+        console.log("alias doesnt exists")
+        
         // update db
         const success = await set_alias_path(alias_path, dest)
+
         if (success) {
             // no errors with db, return 200 with shortened url
             const short = get_host(req) + (Bun.env.SHORTENED || "") + "/" + alias_path
