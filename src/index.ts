@@ -1,15 +1,19 @@
 import { get_host, resolve, lookup, register } from "./server/api/v1/api"
 import { NewSession } from "./server/auth"
 import index from './client/index.html'
+import type { BunRequest } from "bun"
 
 const nonce = "/" + crypto.randomUUID() 
 console.log(`\n\nGENERATED STATIC NONCE: ${nonce}\n`)
+
+const consolePath = Bun.env.CONSOLE || "/admin" as string
+type af = (x:BunRequest) => Promise<Response>
 
 Bun.serve({
     port: Bun.env.PORT || 80,
     routes: {
         ...{[nonce]: index} as Record<string, typeof index>,
-        "/admin": async req => {
+        ...{[consolePath]: async req => {
             const token = NewSession()
             return fetch(`${get_host(req)}${nonce}`).then(res => {
                 const { headers } = res
@@ -17,8 +21,7 @@ Bun.serve({
                 headers.delete("Content-Length")
                 headers.set("Set-Cookie", `session_token=${token}; HttpOnly; SameSite`)
                 return res
-            })
-        },
+            })}} as Record<string, af>,
         "/api/v1/resolve": {
             POST: async req => {
                 console.log('\n\nREQUEST TO /api/v1/resolve\n')
@@ -39,7 +42,7 @@ Bun.serve({
         }
     },
     fetch() {
-        return new Response("URL Shortener available at /admin", {
+        return new Response(`URL Shortener available at ${consolePath}`, {
             headers: {
                 "Content-Type": "text/plain"
             },
