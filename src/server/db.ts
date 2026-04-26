@@ -10,19 +10,41 @@ await pg`DEALLOCATE ALL`
 async function cleanURLs() {
     console.log("cleaning database")
     try {
-        await pg`DELETE FROM ${sql(DB_NAME)} WHERE created_at < NOW() - INTERVAL '1 day'`
+        await pg`DELETE FROM ${sql(DB_NAME)} WHERE created_at < NOW() - INTERVAL '${sql(Bun.env.PUBLIC_LINK_TTL)} days'`
     } catch (error) {
         if (error instanceof Error) {
-            console.log(error.message)
+            console.error(error.message)
         } else {
             console.error("Failed to clear database of old urls")
         }
     }
 }
 
+// get all entries
+async function db_live() {
+    console.log(`DB Liveness Check - ${new Date().toUTCString()}`)
+    let res: Array<any>
+    try {
+        res = await pg`SELECT 1` as Array<any>
+        console.log("DB Liveness Check - PASS")
+    } catch (error) {
+        // do not crash on database error
+        if (error instanceof Error) {
+            console.error(error.message)
+        } else {
+            console.error("Database ping failes")
+        }
+    }
+}
+
+
 // run cleaning routine every minute
 const cleanURLsSchedule = setInterval(cleanURLs, 60000)
-cleanURLs()
+await cleanURLs()
+
+// run check for 
+const livenessSchedule = setInterval(db_live, 60000)
+await db_live()
 
 
 
@@ -33,7 +55,7 @@ export async function get_dest(alias_path: string): Promise<string> {
     } catch (error) {
         // do not crash on database error
         if (error instanceof Error) {
-            console.log(error.message)
+            console.error(error.message)
         } else {
             console.error("Database error getting dest url")
         }
@@ -54,7 +76,7 @@ export async function get_alias(host: string, dest: string): Promise<Array<strin
     } catch (error) {
         // do not crash on database error
         if (error instanceof Error) {
-            console.log(error.message)
+            console.error(error.message)
         } else {
             console.error("Database error doing reverse lookup using dest url")
         }
@@ -76,7 +98,7 @@ export async function set_alias_path(alias_path: string, dest: string): Promise<
     } catch (error) {
         // do not crash on database error
         if (error instanceof Error) {
-            console.log(error.message)
+            console.error(error.message)
         } else {
             console.error("Database error interting/updating row entry")
         }

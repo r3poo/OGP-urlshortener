@@ -2,7 +2,7 @@
 A URL shortener built with React on the Bun runtime that can be served via a public IP or behind a reverse proxy passing proxy headers. Console acccessible from /admin path
 
 ## Configuration
-Application uses a postgresql backend to store redirect routes. If using Supabase, select `Transaction pooler` when connecting.
+Application uses a postgresql backend to store redirect routes. If using Supabase, select `Session pooler` when connecting.
 
 Create Database With Following Schema:
 | Name | Type | Default Value | Primary | Unique |

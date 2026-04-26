@@ -42,11 +42,14 @@ export function Page() {
             // chain reset with useEffect?
         }
     }
+    
+    // env is replaced by bun at build. use "a few" if running dev server (not build files)
+    const ttl = typeof process.env.PUBLIC_LINK_TTL==="string" ? process.env.PUBLIC_LINK_TTL : "a few"
 
     return (
         <main className="panel">
             <h1>Create a shortened URL</h1>
-            <p>Shortened URLs expire after 24 hours.</p>
+            <p>Shortened URLs expire after {ttl} days.</p>
 
             <form id="create-form" onSubmit={onClickSubmit}>
                 <label>
