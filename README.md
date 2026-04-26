@@ -44,34 +44,41 @@ PRIV_TOKEN= #optional
 ## Deployment
 
 To install Bun runtime:
-
 ```bash
 npm install -g bun
 ```
 
 To install dependencies:
-
 ```bash
 bun install
 ```
 
 To start a development server:
-
 ```bash
-bun dev
+bun run dev
+```
+
+To build frontend:
+```bash
+bun run buid
 ```
 
 To run for production:
-
 ```bash
-bun start
+bun run start
 ```
+
+To build then run for production:
+```bash
+bun run serve
+```
+
 
 To run persistently:
 
 ```
 bun install -g pm2
-pm2 start --name url "bun --watch ./src/index.ts"
+pm2 start --name url "bun run serve"
 
 ### To Stop ###
 pm2 stop url
