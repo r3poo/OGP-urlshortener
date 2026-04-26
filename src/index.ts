@@ -3,11 +3,19 @@ import { NewSession } from "./server/auth"
 import index from './client/index.html'
 import type { BunRequest } from "bun"
 
+// load path for frontend
 const nonce = "/" + crypto.randomUUID() 
 console.log(`\n\nGENERATED STATIC NONCE: ${nonce}\n`)
 
+// load path for console
 const consolePath = Bun.env.CONSOLE || "/admin" as string
-type af = (x:BunRequest) => Promise<Response>
+type consoleType = Record<string, (x:BunRequest) => Promise<Response>>
+
+// load path for links
+export const linkExtension = Bun.env.SHORTENED || ""
+const linkPath = (Bun.env.SHORTENED || "") + "/:path"
+type linkType = Record<string, {GET:(x:BunRequest) => Promise<Response>}>
+
 
 Bun.serve({
     port: Bun.env.PORT || 80,
@@ -21,7 +29,8 @@ Bun.serve({
                 headers.delete("Content-Length")
                 headers.set("Set-Cookie", `session_token=${token}; HttpOnly; SameSite`)
                 return res
-            })}} as Record<string, af>,
+            })
+        }} as consoleType,
         "/api/v1/resolve": {
             POST: async req => {
                 console.log('\n\nREQUEST TO /api/v1/resolve\n')
@@ -34,19 +43,19 @@ Bun.serve({
                 return await register(req)
             }
         },
-        "/url/:path": {
+        ...{[linkPath]: {
             GET: async req => {
                 console.log('\n\nREQUEST TO /url/*\n')
                 return await resolve(req)
             }
-        }
+        }} as linkType
     },
     fetch() {
-        return new Response(`URL Shortener available at ${consolePath}`, {
+        return new Response("Bad Request", {
             headers: {
                 "Content-Type": "text/plain"
             },
-            status: 404
+            status: 400
         })
     }
 })

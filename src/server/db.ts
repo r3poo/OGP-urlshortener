@@ -48,7 +48,7 @@ export async function get_alias(host: string, dest: string): Promise<Array<strin
 
 export async function set_alias_path(alias_path: string, dest: string): Promise<boolean> {
     try{
-        let res = await pg`INSERT INTO forwards (alias_path, dest) VALUES (${alias_path}, ${dest}) ON CONFLICT (alias_path) DO UPDATE SET alias_path=${alias_path}, dest=${dest}`
+        await pg`INSERT INTO forwards (alias_path, dest) VALUES (${alias_path}, ${dest}) ON CONFLICT (alias_path) DO UPDATE SET alias_path=${alias_path}, dest=${dest}`
     } catch (error) {
         // do not crash on database error
         if (error instanceof Error) {

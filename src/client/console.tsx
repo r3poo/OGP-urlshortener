@@ -1,6 +1,7 @@
 import { type SubmitEvent, useState } from "react";
 import './styling.css'
 
+
 export function Page() {
     const [status, setStatus] = useState('Ready')
     const [short, setShort] = useState('')
@@ -22,21 +23,19 @@ export function Page() {
             await fetch(`/api/v1/register`, {
                 method: "POST",
                 body: JSON.stringify({"alias_path": alias_path, "dest": dest})
-            }).then(res => {
-                // return if response is ok, successful
-                if (res.status===200) {
-                    setStatus(`URL available at: `)
-                    setShort(window.location.origin + "/url/" + alias_path)
-                } else {
-                    return res.text()
+            }).then(
+                async res => {
+                    // use text body of response as either shortened url or error message
+                    const text = await res.text()
+                    if (res.status===200) {
+                        setStatus(`URL available at: `)
+                        setShort(text)
+                    } else {
+                        setStatus(text)
+                        setShort('')
+                    }
                 }
-            }).then(text => {
-                // change status if text is returned (code not 200)
-                if (text!=null) {
-                    setStatus(text)
-                    setShort('')
-                }
-            })
+            )
         } catch {
             setStatus("Error: service unavailable")
             setShort('')

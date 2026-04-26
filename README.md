@@ -43,6 +43,9 @@ To run persistently:
 ```
 bun install -g pm2
 pm2 start --name url "bun --watch ./src/index.ts"
+
+### To Stop ###
+pm2 stop url
 ```
 
 ### Demo
