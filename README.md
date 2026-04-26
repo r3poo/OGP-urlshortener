@@ -184,6 +184,6 @@ The table configured by `DB_NAME` is used for all API operations:
 - `set_alias_path(alias_path, dest)`: insert/update alias row (upsert on `alias_path`)
 
 Maintenance job:
-- cleanup is triggered every minute where rows older than 1 day are deleted
+- cleanup is triggered every minute where rows older than configured number of days are deleted
 - prepared statement are cleared from database on startup
 
