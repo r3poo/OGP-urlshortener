@@ -47,20 +47,19 @@ export function Page() {
     return (
         <main className="panel">
             <h1>Create a shortened URL</h1>
-            <p>Set your short path and destination URL.</p>
+            <p>Enter a custom short path and destination URL.</p>
 
             <form id="create-form" onSubmit={onClickSubmit}>
                 <label>
-                    Shortened URL
-                    <div className="link-line">
-                        {/* <span className="prefix">{window.location.origin}/</span> */}
-                        <span className="prefix">https://ogp-urlshortener.onrender.com/</span>
+                    <div className="input-header">Shortened URL</div>
+                    <div className="link-flex">
+                        <span className="prefix">{window.location.origin}/</span>
                         <input name="alias_path" className="alias_path" type="text" placeholder="my-link" required />
+                        <div className="note">Allowed path chars: letters, numbers, and URL-safe symbols except slash (/)</div>
                     </div>
-                    <div className="note">Allowed path chars: letters, numbers, and URL-safe symbols except slash (/).</div>
                 </label>
                 <label>
-                    Destination URL
+                    <div className="input-header">Destination URL</div>
                     <input name="dest" className="dest" type="url" placeholder="https://example.com" required />
                 </label>
 

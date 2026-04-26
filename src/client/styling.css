@@ -7,7 +7,7 @@
   --accent-2: #f3a447;
   --border: #d8cbbd;
   --danger: #9f2a2a;
-  font-size: small;
+  font-size: medium;
 }
 
 * { box-sizing: border-box; }
@@ -25,7 +25,7 @@ body {
 }
 
 .panel {
-  max-width: 1000px;
+  max-width: 800px;
   min-width: 300px;
   width: 80vw;
   background: linear-gradient(180deg, #fffdf9 0%, var(--surface) 100%);
@@ -53,29 +53,34 @@ label {
   margin-top: 10px;
 }
 
-.link-line {
+.input-header {
+  margin-bottom: 8px;
+}
+
+.link-flex {
   display: flex;
   flex-wrap: wrap;
+  gap: 5px;
 }
 
 .prefix {
   font-weight: 500;
-  margin-right: 3px;
   align-self: center;
-  /* flex: 1 1 8000px; */
-  flex: none;
+  flex: 0 0 auto;
 }
 
 .alias_path {
-  flex: 1 1 8000px;
+  flex: 1 1 300px;
+  width: auto;
 }
 
 .note {
-  font-size: 0.85rem;
+  font-size: 0.70rem;
+  font-weight: 600;
   color: var(--muted);
-  padding-left: 5px;
-  padding-top: 5px;
-  grid-column: 1 / span 2;
+  width: 100%;
+  text-align: right;
+  margin-right: 5px;
 }
 
 input {
@@ -97,6 +102,7 @@ button {
   border: 0;
   border-radius: 10px;
   padding: 11px 14px;
+  margin-top: 20px;
   font-size: 1rem;
   font-weight: 700;
   color: #fff;
