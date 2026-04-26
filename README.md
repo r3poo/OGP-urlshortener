@@ -10,6 +10,7 @@ PG_URI: postgres connection uri (postgresql://...)
 PORT: override port binding (defaults to 80)
 HOST: override public hostname (defaults to auto-detection)
 CONSOLE: override path to console (defaults to /admin)
+SHORTENED: override path for shortened urls (defaults to /)
 ```
 
 ### Deployment
