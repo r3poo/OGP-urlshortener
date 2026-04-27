@@ -10,7 +10,7 @@ type consoleType = Record<string, (x:BunRequest) => Promise<Response>>
 
 // load path for links
 export const linkExtension = Bun.env.SHORTENED || ""
-const linkPath = (Bun.env.SHORTENED || "/url") + "/:path"
+const linkPath = (Bun.env.PUBLIC_SHORTENED || "/url") + "/:path"
 type linkType = Record<string, {GET:(x:BunRequest) => Promise<Response>}>
 
 // check for production
