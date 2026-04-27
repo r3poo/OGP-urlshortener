@@ -34,7 +34,7 @@ HOST= #optional
 CONSOLE= #optional
 
 # path for shortened urls (defaults to /url, cannot be root /)
-SHORTENED= #optional
+PUBLIC_SHORTENED= #optional
 
 # token to access api directly, see api section in readme
 PRIV_TOKEN= #optional

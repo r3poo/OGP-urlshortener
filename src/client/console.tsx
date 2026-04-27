@@ -44,7 +44,16 @@ export function Page() {
     }
     
     // env is replaced by bun at build. use "a few" if running dev server (not build files)
-    const ttl = typeof process.env.PUBLIC_LINK_TTL==="string" ? process.env.PUBLIC_LINK_TTL : "a few"
+    // const ttl = typeof process ==="undefined" ? process.env.PUBLIC_LINK_TTL : "a few"
+    // const shortened = typeof process ==="undefined" ? process.env.PUBLIC_SHORTENED : "/url/"
+    let ttl, shortened
+    try {
+        ttl = process.env.PUBLIC_LINK_TTL
+        shortened = process.env.PUBLIC_SHORTENED
+    } catch {
+        ttl = "a few"
+        shortened = "/url"
+    }
 
     return (
         <main className="panel">
@@ -55,7 +64,7 @@ export function Page() {
                 <label>
                     <div className="input-header">Shortened URL</div>
                     <div className="link-flex">
-                        <span className="prefix">{window.location.origin}/</span>
+                        <span className="prefix">{window.location.origin + shortened + "/"}</span>
                         <input name="alias_path" className="alias_path" type="text" placeholder="custom token" required />
                         <div className="note">only alphanumeric and URL-safe symbols except slash (/)</div>
                     </div>
