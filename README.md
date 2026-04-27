@@ -4,7 +4,7 @@ A URL shortener built with React on the Bun runtime that can be served via a pub
 ## Configuration
 Application uses a postgresql backend to store redirect routes. If using Supabase, select `Session pooler` when connecting.
 
-Create Database With Following Schema:
+Create table with following schema:
 | Name | Type | Default Value | Primary | Unique |
 |------|------|------|------|------|
 | id | int8 |  | :o: | :o: | 
