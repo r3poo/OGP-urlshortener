@@ -43,17 +43,9 @@ export function Page() {
         }
     }
     
-    // env is replaced by bun at build. use "a few" if running dev server (not build files)
-    // const ttl = typeof process ==="undefined" ? process.env.PUBLIC_LINK_TTL : "a few"
-    // const shortened = typeof process ==="undefined" ? process.env.PUBLIC_SHORTENED : "/url/"
     let ttl, shortened
-    try {
-        ttl = process.env.PUBLIC_LINK_TTL
-        shortened = process.env.PUBLIC_SHORTENED
-    } catch {
-        ttl = "a few"
-        shortened = "/url"
-    }
+    try { ttl = process.env.PUBLIC_LINK_TTL } catch { ttl = "a few" }
+    try { shortened = process.env.PUBLIC_SHORTENED } catch { shortened = "/url" }
 
     return (
         <main className="panel">
