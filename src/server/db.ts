@@ -110,3 +110,37 @@ export async function set_alias_path(alias_path: string, dest: string): Promise<
 
 
 
+export async function get_visits(alias_path: string): Promise<number> {
+    let res
+    try {
+        res = await pg`SELECT * FROM ${sql(DB_NAME)} WHERE alias_path=${alias_path}` as Array<any>
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error(error.message)
+        } else {
+            console.error("Database error incrementing visits")
+        }
+        return 0
+    }
+    
+    if (res.length==0) {
+        return 0
+    } else {
+        return res[0].visits
+    }
+}
+
+
+export async function update_visits(alias_path: string): Promise<boolean> {
+    try {
+        await pg`UPDATE ${sql(DB_NAME)} SET visits=visits+1 WHERE alias_path=${alias_path}`
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error(error.message)
+        } else {
+            console.error("Database error incrementing visits")
+        }
+        return false
+    }
+    return true
+}

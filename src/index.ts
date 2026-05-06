@@ -1,3 +1,4 @@
+import { update_visits } from "./server/db"
 import { get_host, resolve, lookup, register } from "./server/api/v1/api"
 import { NewSession } from "./server/auth"
 import type { BunRequest } from "bun"
@@ -49,6 +50,7 @@ if (production) {
             },
             ...{[linkPath]: {
                 GET: async req => {
+                    await update_visits(req.params.path as string)
                     console.log(`\n\nREQUEST TO resolver: ${req.params.path}\n`)
                     return await resolve(req)
                 }
@@ -106,6 +108,7 @@ if (production) {
             },
             ...{[linkPath]: {
                 GET: async req => {
+                    await update_visits(req.params.path as string)
                     console.log(`\n\nREQUEST TO resolver: ${req.params.path}\n`)
                     return await resolve(req)
                 }

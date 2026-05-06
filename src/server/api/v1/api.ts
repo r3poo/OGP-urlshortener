@@ -1,6 +1,7 @@
 import type { BunRequest } from "bun";
-import { get_dest, get_alias, set_alias_path } from "../../db";
+import { get_dest, get_alias, set_alias_path, update_visits, get_visits } from "../../db";
 import { ValidateSession } from "../../auth";
+import { visitCommaListElements } from "typescript";
 
 export type ReqBody = {
     alias_path: string,
@@ -136,7 +137,8 @@ export async function register(req: BunRequest): Promise<Response> {
         // return 409:conflict if alias_path already exists
         if (await get_dest(alias_path)!=='') {
             console.log("alias exists")
-            return new Response("Alias already exists", {
+            const visit_count: number = await get_visits(body.alias_path)
+            return new Response(`Alias already exists, visited ${visit_count} times`, {
                 headers: {
                     "Content-Type": "text/plain"
                 },
@@ -176,3 +178,4 @@ export async function register(req: BunRequest): Promise<Response> {
         })
     }
 }
+
