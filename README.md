@@ -11,6 +11,7 @@ Create table with following schema:
 | created_at | timestampz | now() | :x: | :x: |
 | alias_path | text | "" | :x: | :o: | 
 | dest | text | "" | :x: | :x: |
+| visits | int8 | 0 | :x: | :x: |
 
 
 Create .env file with the following variables:
@@ -85,7 +86,7 @@ pm2 stop url
 ```
 
 ## Demo
-Available at:\
+Available at (may not be live):\
 [us.r3po.org/admin](https://us.r3po.org/admin) (Singapore only)\
 [ogp-urlshortener.onrender.com/admin](https://ogp-urlshortener.onrender.com/admin) (Inernational)
 
@@ -110,7 +111,7 @@ Base behavior is implemented in `src/server/api/v1/api.ts` and database operatio
 
 ### `POST /api/v1/register`
 
-Create a new short alias.
+Create a new short alias. Returns string with number of visits if alias exists.
 
 Request body (`application/json`):
 ```json
@@ -147,14 +148,14 @@ Responses (`text/plain`):
 - `401`: `Unauthorized`
 - `404`: `No associated alias`
 
-### `GET /:path` (or `GET /<ENV.SHORTENED>/:path`)
+### `GET /url/:path` (or `GET /<ENV.SHORTENED>/:path`)
 
-Resolve an alias and redirect.
+Resolve an alias and redirect. Increments visit count for alias every request.
 
 Responses:
 - `302`: redirect with `Location` header set to stored `dest`
 - `400`: `Invalid shortened path`
-- `404`: `Alias does not exist`
+- `404`: `Alias does not exist, visited <number of visits> times`
 
 
 ### Example usage with curl
