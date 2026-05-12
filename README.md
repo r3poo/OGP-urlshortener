@@ -87,7 +87,6 @@ pm2 stop url
 
 ## Demo
 Available at (may not be live):\
-[us.r3po.org/admin](https://us.r3po.org/admin) (Singapore only)\
 [ogp-urlshortener.onrender.com/admin](https://ogp-urlshortener.onrender.com/admin) (Inernational)
 
 
